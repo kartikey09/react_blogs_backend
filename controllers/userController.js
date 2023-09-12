@@ -68,7 +68,8 @@ module.exports.saveProfilePicture = async function saveProfilePicture(
   next
 ) {
   if (req !== undefined && req.body !== undefined && req.body.image === null) {
-    const curr_user = await userModel.findOne({ email: req.body.email });
+    console.log(req.body.id);
+    const curr_user = await userModel.findById(req.body.id);
     await curr_user.updateOne({ profilePictureURL: null });
     res.status(200).json({ data: null });
   } else {
@@ -78,9 +79,17 @@ module.exports.saveProfilePicture = async function saveProfilePicture(
         console.log(err.message);
         return res.status(400).json({ success: false, message: err.message });
       }
-      const curr_user = await userModel.findOne({ email: req.body.email });
-      await curr_user.updateOne({ profilePictureURL: req.file.location });
-      res.status(200).json({ data: req.file.location });
+      userModel
+        .findById(req.body.id)
+        .then((response) => {
+          return response.updateOne({ profilePictureURL: req.file.location });
+        })
+        .then(() => {
+          res.status(200).json({ data: req.file.location });
+        })
+        .catch((err) => {
+          res.status(500).json({ err });
+        });
     });
   }
 };
@@ -89,13 +98,16 @@ module.exports.getUsersByName = async function getUsersByName(req, res) {
   const userName = req.params.userName;
   try {
     await userModel
-      .find({ name: new RegExp('^' + userName, 'i') }).lean()
+      .find({ name: new RegExp('^' + userName, 'i') })
+      .lean()
       .then((response) => {
-        let response_new = response.map((obj) => {delete obj.password; return obj});
-        console.log(response_new);
-        res.send({ data : response_new });
+        let response_new = response.map((obj) => {
+          delete obj.password;
+          return obj;
+        })
+        res.send({ data: response_new });
       });
   } catch (error) {
-    res.status(500).send({error});
+    res.status(500).send({ error });
   }
 };
