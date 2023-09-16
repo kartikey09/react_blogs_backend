@@ -33,13 +33,14 @@ module.exports.getAllUsers = async function getAllUsers(req, res) {
 module.exports.getSelectedUsers = async function getSelectedUsers(req, res) {
   try {
     const users = req.body;
-    userData = await userModel
+    data = await userModel
       .find({
         _id: {
           $in: [...users.map((id) => ObjectId(id))],
         },
       })
-      .clone();
+      .clone().lean();
+      userData = data.map(obj=>{delete obj.password; return obj});
     return res.status(200).json(userData);
   } catch (err) {
     res.status(500).json({
