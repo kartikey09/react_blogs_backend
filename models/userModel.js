@@ -51,10 +51,10 @@ const userSchema = mongoose.Schema({
   ],
 });
 
-userSchema.pre('save', async function () {
-  let hashedPassword = await bcrypt.hash(this.password, 10);
-  this.password = hashedPassword;
-});
+// userSchema.pre('save', async function () {
+//   let hashedPassword = await bcrypt.hash(this.password, 10);
+//   this.password = hashedPassword;
+// });
 
 const userModel = mongoose.model('users', userSchema);
 module.exports = userModel;

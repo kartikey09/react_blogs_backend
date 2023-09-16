@@ -65,6 +65,8 @@ module.exports.authUserLogin = async function authUserLogin(req, res) {
 module.exports.authUserSignup = async function authUserSignup(req, res) {
   try {
     let user = req.body;
+    let hashedPassword = await bcrypt.hash(this.password, 10);
+    user.password = hashedPassword;
     let doesUserExist = await userModel.findOne({ email: req.body.email });
     if (doesUserExist) {
       res.status(400).json({
