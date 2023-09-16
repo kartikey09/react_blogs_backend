@@ -46,6 +46,7 @@ const userSchema = mongoose.Schema({
   posts: [
     {
       type: ObjectID,
+      unique: true,
     },
   ],
 });

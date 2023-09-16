@@ -29,6 +29,8 @@ module.exports.createPost = async (req, res) => {
         postId: createdPost._id,
         createdAt: Date.now()
       });
+      user.posts.push(createdPost._id);
+      await user.save();
       if (!createdPost || !postsComment)
         res
           .status(500)
@@ -88,6 +90,8 @@ module.exports.deletePost = async (req, res) => {
     }
     await postsModel.deleteOne({ _id: post._id });
     await commentsModel.deleteOne({postId: post._id});
+    user.posts = user.posts.filter((obj)=>JSON.stringify(obj._id) !== JSON.stringify(post._id));
+    await user.save();
 
     res.status(202).send(); // 202 means that the request has not been acted upon but will likely succeed
   } catch (err) {
