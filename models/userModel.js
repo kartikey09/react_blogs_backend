@@ -26,6 +26,12 @@ const userSchema = mongoose.Schema({
     required: false,
     unique: false,
   },
+  backgroundPictureURL: {
+    type: String,
+    default: null,
+    required: false,
+    unique: false,
+  },
   dateCreated: {
     type: Date,
     required: true,

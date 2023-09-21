@@ -95,6 +95,39 @@ module.exports.saveProfilePicture = async function saveProfilePicture(
   }
 };
 
+module.exports.saveBackgroundPicture = async function saveBackgroundPicture(
+  req,
+  res,
+  next
+) {
+  if (req !== undefined && req.body !== undefined && req.body.image === null) {
+    console.log(req.body.id);
+    const curr_user = await userModel.findById(req.body.id);
+    await curr_user.updateOne({ backgroundPictureURL: null });
+    res.status(200).json({ data: null });
+  } else {
+    const uploadSingle = upload('profile-pictures-db').single('croppedImage');
+    uploadSingle(req, res, async (err) => {
+      if (err) {
+        console.log(err.message);
+        return res.status(400).json({ success: false, message: err.message });
+      }
+      userModel
+        .findById(req.body.id)
+        .then((response) => {
+          return response.updateOne({ backgroundPictureURL: req.file.location });
+        })
+        .then(() => {
+          res.status(200).json({ data: req.file.location });
+        })
+        .catch((err) => {
+          res.status(500).json({ err });
+        });
+    });
+  }
+};
+
+
 module.exports.getUsersByName = async function getUsersByName(req, res) {
   const userName = req.params.userName;
   try {
