@@ -7,6 +7,7 @@ const {
   deletePost,
   likePost,
   unlikePost,
+  getPostsByUser,
 } = require('../controllers/postController');
 const postRoutes = express.Router();
 
@@ -14,6 +15,8 @@ const postRoutes = express.Router();
 postRoutes.route('/create-post').post(createPost);
 
 postRoutes.route('/get-all-posts').get(getAllPosts);
+
+postRoutes.route('/get-user-posts/id/:id').get(getPostsByUser);
 
 postRoutes.route('/edit-post').patch(editPost);
 

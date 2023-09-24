@@ -14,6 +14,17 @@ module.exports.getAllPosts = async (req, res) => {
   }
 };
 
+module.exports.getPostsByUser = async (req, res) =>{
+  try{
+    const id = req.params.id;
+    const user = await userModel.findById(id);
+    const posts = await postsModel.find({'_id' : {$in : user.posts}})
+    res.json({data : posts});
+  } catch(err){
+    res.status(500).json({err});
+  }
+}
+
 module.exports.createPost = async (req, res) => {
   try {
     const user = await userModel.findById(req.body.user._id);
