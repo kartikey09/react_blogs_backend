@@ -33,7 +33,8 @@ module.exports.authUserLogin = async function authUserLogin(req, res) {
     let dbUser = await userModel.findOne({ email: user.email });
     if (dbUser) {
       let pass = await bcrypt.compare(user.password, dbUser.password);
-      if (pass) {
+      //! REPLACE <true> WITH <pass> for normal functionality
+      if (true) {
         let token = jwt.sign({ payload: user['_id'] }, _JWT_TOKEN_);
         res.cookie('login_token', token, { secure: true, httpOnly: true });
         res.json({
