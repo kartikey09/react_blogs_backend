@@ -8,21 +8,24 @@ const testRouter = require('./routers/testRouter');
 const postRoutes = require('./routers/postRouter');
 const commentRouter = require('./routers/commentRouter');
 const replyRouter = require('./routers/replyRouter');
-const app = express(); 
-app.use(cors(), express.json(),cookieParser());
+const app = express();
+app.use(cors(), express.json(), cookieParser());
 module.exports.port = port = 3001;
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://admin:admin123@mastercluster.dxy63ez.mongodb.net/General?retryWrites=true&w=majority').then(() => {
-  try {
-    app.listen(port, () => console.log(`Server connected to port ${port}`));
-  } catch (e) {
-    console.log(e.message);
-  }
-})
-.catch(e=>{
-    console.log(`Invalid database connection, error message: ${e.message}`)
-})
-
+mongoose
+  .connect(
+    'mongodb+srv://admin:admin123@mastercluster.dxy63ez.mongodb.net/General?retryWrites=true&w=majority'
+  )
+  .then(() => {
+    try {
+      app.listen(port, () => console.log(`Server connected to port ${port}`));
+    } catch (e) {
+      console.log(e.message);
+    }
+  })
+  .catch((e) => {
+    console.log(`Invalid database connection, error message: ${e.message}`);
+  });
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
