@@ -30,11 +30,21 @@ module.exports.createPost = async (req, res) => {
     const user = await userModel.findById(req.body.user._id);
     if (!user) res.status(400).json({ message: 'user does not exist' }); //400 === bad request
     try {
-      newPost = {
-        ownerId: user._id,
-        body: req.body.body,
-        createdAt: Date.now()
-      };
+      if(req.body.postType == 'poll'){
+        let newPost = {
+          ownerId: user._id,
+          body: req.body.body,
+          postType: req.body.postType,
+          createdAt: Date.now()
+        }
+      } else {
+      let  newPost = {
+          ownerId: user._id,
+          body: req.body.body,
+          postType: req.body.postType,
+          createdAt: Date.now()
+        };
+      }
       const createdPost = await postsModel.create(newPost);
       const postsComment = await commentsModel.create({
         postId: createdPost._id,
