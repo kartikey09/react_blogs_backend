@@ -1,5 +1,5 @@
 const userModel = require('../models/userModel');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _JWT_TOKEN_ = require('../secret');
 
@@ -32,7 +32,7 @@ module.exports.authUserLogin = async function authUserLogin(req, res) {
     let user = req.body;
     let dbUser = await userModel.findOne({ email: user.email });
     if (dbUser) {
-      // let pass = await bcrypt.compare(user.password, dbUser.password);
+      let pass = await bcrypt.compare(user.password, dbUser.password);
       //! REPLACE <true> WITH <pass> for normal functionality
       if (true) {
         let token = jwt.sign({ payload: user['_id'] }, _JWT_TOKEN_);
