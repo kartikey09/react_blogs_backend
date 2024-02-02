@@ -17,11 +17,11 @@ app.use(cors({
   methods: ['POST', 'GET', 'DELETE', 'PATCH', 'UPDATE'],
   credentials: true
 }), express.json(), cookieParser());
-const port = process.env.PORT || 3001;
+const port = 3001;
 mongoose.set('strictQuery', false);
 mongoose
   .connect(
-    process.env.MONGO_URL
+    process.env.VITE_MONGO_URL
   )
   .then(() => {
     try {
