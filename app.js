@@ -12,7 +12,11 @@ const replyRouter = require('./routers/replyRouter');
 const followRouter = require('./routers/followRouter');
 const unfollowRouter = require('./routers/unFollowRoute');
 const app = express();
-app.use(cors(), express.json(), cookieParser());
+app.use(cors({
+  origin: ["https://react-blogs-backend.vercel.app/"],
+  methods: ['POST', 'GET', 'DELETE', 'PATCH', 'UPDATE'],
+  credentials: true
+}), express.json(), cookieParser());
 const port = process.env.PORT || 3001;
 mongoose.set('strictQuery', false);
 mongoose
