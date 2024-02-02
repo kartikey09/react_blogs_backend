@@ -14,7 +14,7 @@ const unfollowRouter = require('./routers/unFollowRoute');
 const app = express();
 app.use(cors({
   origin: ["*"],
-  methods: ['POST', 'GET', 'DELETE', 'PATCH', 'UPDATE'],
+  methods: ['PUT', 'POST', 'GET', 'DELETE', 'PATCH', 'UPDATE'],
   credentials: true
 }), express.json(), cookieParser());
 const port = 3001;
