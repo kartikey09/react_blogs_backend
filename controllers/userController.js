@@ -127,7 +127,6 @@ module.exports.saveBackgroundPicture = async function saveBackgroundPicture(
   }
 };
 
-
 module.exports.getUsersByName = async function getUsersByName(req, res) {
   const userName = req.params.userName;
   try {
@@ -145,3 +144,21 @@ module.exports.getUsersByName = async function getUsersByName(req, res) {
     res.status(500).send({ error });
   }
 };
+
+module.exports.saveUserDetails = async function(req, res){
+  try{
+    console.log(req.body);
+    const user = await userModel.findById(req.params.userId);
+    if(user){
+      for(let i = 0; i < Object.keys(req.body).length; i++){
+        user.details[Object.keys(req.body)[i]] = req.body[Object.keys(req.body)[i]];
+      }
+      user.save();
+      res.status(200).send()
+    }else {
+      res.status(404).json({msg: 'user not found'});
+    }
+  }catch(e){
+    res.status(500).json({error: e.message})
+  }
+}

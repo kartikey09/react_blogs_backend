@@ -1,5 +1,5 @@
 const userModel = require('../models/userModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _JWT_TOKEN_ = require('../secret');
 
@@ -18,7 +18,7 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
         res.redirect('/login');
       }
     } catch (e) {
-      console.log(e.message);
+      // console.log(e.message);
     }
   } else {
     res.status(422).json({
@@ -41,6 +41,7 @@ module.exports.authUserLogin = async function authUserLogin(req, res) {
           data: {
             _id: dbUser._id,
             email: dbUser.email,
+            details: dbUser.details,
             name: dbUser.name,
             profilePictureURL: dbUser.profilePictureURL,
           },
@@ -84,7 +85,7 @@ module.exports.authUserSignup = async function authUserSignup(req, res) {
         _id: savedUser._id,
         name: savedUser.name,
         email: savedUser.name,
-
+        details: savedUser.details,
       });
     } else {
       res.status(500).json({
