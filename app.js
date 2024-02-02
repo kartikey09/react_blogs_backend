@@ -13,7 +13,7 @@ const followRouter = require('./routers/followRouter');
 const unfollowRouter = require('./routers/unFollowRoute');
 const app = express();
 app.use(cors({
-  origin: ["https://react-blogs-backend.vercel.app/"],
+  origin: ["*"],
   methods: ['POST', 'GET', 'DELETE', 'PATCH', 'UPDATE'],
   credentials: true
 }), express.json(), cookieParser());
