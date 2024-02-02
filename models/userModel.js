@@ -104,6 +104,12 @@ const userSchema = mongoose.Schema({
       required: false,
     },
   ],
+  requests: [
+    {
+      type: ObjectID,
+      required: false,
+    },
+  ],
   posts: [
     {
       type: ObjectID,
