@@ -6,7 +6,6 @@ const {
   getSelectedUsers,
   getUsersByName,
   saveBackgroundPicture,
-  saveUserDetails,
 } = require('../controllers/userController');
 
 const userRoutes = express.Router();
@@ -20,7 +19,5 @@ userRoutes.route('/save-profile-picture').post(saveProfilePicture);
 userRoutes.route('/save-background-picture').post(saveBackgroundPicture);
 
 userRoutes.route('/search/user-name/:userName').get(getUsersByName);
-
-userRoutes.route('/save-details/user/:userId').post(saveUserDetails)
 
 module.exports = userRoutes;

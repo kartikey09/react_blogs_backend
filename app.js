@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -9,15 +8,13 @@ const testRouter = require('./routers/testRouter');
 const postRoutes = require('./routers/postRouter');
 const commentRouter = require('./routers/commentRouter');
 const replyRouter = require('./routers/replyRouter');
-const followRouter = require('./routers/followRouter');
-const unfollowRouter = require('./routers/unFollowRoute');
 const app = express();
 app.use(cors(), express.json(), cookieParser());
-const port = process.env.PORT || 3001;
+module.exports.port = port = 3001;
 mongoose.set('strictQuery', false);
 mongoose
   .connect(
-    process.env.MONGO_URL
+    'mongodb+srv://admin:admin123@mastercluster.dxy63ez.mongodb.net/General?retryWrites=true&w=majority'
   )
   .then(() => {
     try {
@@ -36,8 +33,6 @@ app.use('/test', testRouter);
 app.use('/post', postRoutes);
 app.use('/comment', commentRouter);
 app.use('/reply', replyRouter);
-app.use('/follow', followRouter);
-app.use('/unfollow', unfollowRouter);
 
 app.get('*', (req, res) => {
   res.send('Error 404 page not found :(');

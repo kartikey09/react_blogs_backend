@@ -8,7 +8,6 @@ const {
   likePost,
   unlikePost,
   getPostsByUser,
-  votePoll,
 } = require('../controllers/postController');
 const postRoutes = express.Router();
 
@@ -26,8 +25,5 @@ postRoutes.route('/delete-post').delete(deletePost);
 postRoutes.route('/like/id/:id').post(likePost);
 
 postRoutes.route('/unlike/id/:id').post(unlikePost);
-
-postRoutes.route('/vote/').post(votePoll);
-
 
 module.exports = postRoutes;

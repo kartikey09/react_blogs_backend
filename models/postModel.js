@@ -17,11 +17,6 @@ const postsSchema = mongoose.Schema({
     type: Date,
     default: null,
   },
-  postType: {
-    type: String,
-    default: 'post',
-    required: true,
-  },
   body: {
     type: String,
     required: true,
@@ -32,31 +27,9 @@ const postsSchema = mongoose.Schema({
     },
     maxLength: [3000, 'body length more than 3000 characters'],
   },
-  pollData: [
-    {
-      option: {
-        type: String,
-        required: true,
-        validate: {
-          validator: function (v) {
-            return !v.split(' ').length <= 0;
-          },
-        },
-        maxLength: [50, 'body length more than 50 characters'],
-      },
-      votes: [
-        {
-          userId: { type: ObjectID },
-        },
-      ],
-      percentage:{
-        type: Number
-      }
-    },
-  ],
   commentsCount: {
     type: Number,
-    default: 0,
+    default: 0
   },
   likes: [
     {
